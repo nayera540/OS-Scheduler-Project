@@ -57,7 +57,7 @@ public class SJF {
                 tot++;
             }
         }
-        System.out.println("\npid  arrival brust  complete turn waiting");
+        System.out.println("\npid   arrival   brust  complete   turn   waiting");
         for(int i=0;i<n;i++)
         {
             avgwt+= wt[i];
@@ -67,9 +67,6 @@ public class SJF {
         System.out.println ("\naverage tat is "+ (float)(avgta/n));
         System.out.println ("average wt is "+ (float)(avgwt/n));
         sc.close();
-        for(int i=0;i<n;i++)
-        {
-            System.out.print(pid[i] + " ");
-        }
+        
 }
 }
