@@ -95,7 +95,7 @@ public class FirstComeFirstServe {
         this.total_waiting_time = total_waiting_time;
     }
 
-
+    // Sorting processes qeueue by arrival time
     public ArrayList<Process> setProcessQueue(ArrayList<Process> pp){
         processQueue.addAll(pp);
         Collections.sort(processQueue, new Comparator<Process>() {
@@ -103,6 +103,8 @@ public class FirstComeFirstServe {
                 return p1.start_time - p2.start_time;
             }
         });
+        
+        // Checking for idle period at time 0
         if(processQueue.get(0).start_time > 0){
             Process idle = new Process();
             idle.setPid(0);
@@ -114,7 +116,8 @@ public class FirstComeFirstServe {
             processQueue.add(0,idle);
         }
         for(int i = 0; i < processQueue.size()-1; i++){
-
+            
+            //Checking for idle periods between processes
             if(processQueue.get(i+1).start_time > processQueue.get(i).completion_time){
                 Process idle = new Process();
                 idle.setPid(0);
