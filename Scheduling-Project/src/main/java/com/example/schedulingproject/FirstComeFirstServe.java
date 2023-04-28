@@ -10,18 +10,23 @@ public class FirstComeFirstServe {
     private float avg_waiting_time;
     int total_turnaround_time = 0;
     int total_waiting_time = 0;
-    // int[] is_completed = new int[100];
     int[] burst_remaining= new int[100];
     int current_time = 0;
-    //  int completed = 0;
     int prev = 0;
     int temp;
     int n; //Number of processes
 
     ArrayList<Process> processQueue = new ArrayList<Process>();
+    
+    /*
+    *  @param   n                  number of processes
+    *  @param prev                 previous time
+    *  @param avg_waiting_time     average waiting time
+    *  @param avg_turnaround_time  average turn around time
+    */
     public void FirstComeFirstServe(ArrayList<Process> p){
         n = p.size();
-
+        
         // Sort the processes by arrival time
         for(int i = 0; i < n-1; i++){
             if (p.get(i).getArrival_time() > p.get(i + 1).getArrival_time()) {
