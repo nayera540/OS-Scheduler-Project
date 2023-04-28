@@ -5,8 +5,6 @@ import java.util.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +14,6 @@ import javafx.scene.Group;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -170,7 +167,15 @@ public class SchedulerController implements Initializable {
 
 
         }
-        if(!pid.getText().isEmpty() && !arrivalTime.getText().isEmpty() && !burstTime.getText().isEmpty() && !priority.getText().isEmpty() && !color.getText().isEmpty()){
+        if(ScheduleType.getValue() == "FCFS"){
+            Process process = new Process(Integer.parseInt(pid.getText()), Integer.parseInt(arrivalTime.getText()), Integer.parseInt(burstTime.getText()),color.getText());
+            arrayProcess.add(process);
+            processes.add(process);
+            processTable.setItems(processes);
+
+
+        }
+        if(!pid.getText().isEmpty() && !arrivalTime.getText().isEmpty() && !burstTime.getText().isEmpty() || !priority.getText().isEmpty() && !color.getText().isEmpty()){
             pid.clear();
             arrivalTime.clear();
             burstTime.clear();
@@ -195,6 +200,22 @@ public class SchedulerController implements Initializable {
 
             avgTurnTime.setText(String.format("%.2f", pp.getAvg_turnaround_time()));
             avgWaitTime.setText(String.format("%.2f", pp.getAvg_waiting_time()));
+
+
+
+        }
+        if(ScheduleType.getValue() == "FCFS"){
+            FirstComeFirstServe fcfs = new FirstComeFirstServe();
+            fcfs.FirstComeFirstServe(arrayProcess);
+            for(int i = 0; i < arrayProcess.size(); i++){
+                processes.get(processes.indexOf(arrayProcess.get(i))).setRemain_time(0);
+                processTable.refresh();
+            }
+
+            GanttStaticDraw(fcfs.setProcessQueue(arrayProcess));
+
+            avgTurnTime.setText(String.format("%.2f", fcfs.getAvg_turnaround_time()));
+            avgWaitTime.setText(String.format("%.2f", fcfs.getAvg_waiting_time()));
 
 
 
@@ -253,7 +274,14 @@ public class SchedulerController implements Initializable {
                     if (updatedRemainTime < 0) {
                         updatedRemainTime = 0;
                     }
-                    currentProcess.setRemain_time(updatedRemainTime);
+                    for(int i = 0; i < arrayProcess.size(); i++){
+                        if(currentProcess.getPid() == processes.get(i).getPid()){
+                            processes.get(i).setRemain_time(updatedRemainTime);
+                        }
+                        else{
+                            currentProcess.setRemain_time(updatedRemainTime);
+                        }
+                    }
                     waitTimeCol.setVisible(false);
                     turnAroundCol.setVisible(false);
                     completeTimeCol.setVisible(false);
@@ -282,6 +310,55 @@ public class SchedulerController implements Initializable {
 
 
         }
+        if(ScheduleType.getValue() == "FCFS"){
+
+            FirstComeFirstServe fcfs = new FirstComeFirstServe();
+            fcfs.FirstComeFirstServe(arrayProcess);
+            ArrayList<Process> queue = fcfs.setProcessQueue(arrayProcess);
+
+            final int[] currentColumnIndex = {0};
+
+
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), e -> {
+                Process currentProcess = queue.get(currentColumnIndex[0]);
+                int remainBurstTime = currentProcess.getRemain_time();
+                if (remainBurstTime > 0) {
+                    int elapsedTimeInSeconds = (int) timeline.getCurrentTime().toSeconds();
+                    int updatedRemainTime = remainBurstTime - elapsedTimeInSeconds;
+                    if (updatedRemainTime < 0) {
+                        updatedRemainTime = 0;
+                    }
+
+                    currentProcess.setRemain_time(updatedRemainTime);
+                    waitTimeCol.setVisible(false);
+                    turnAroundCol.setVisible(false);
+                    completeTimeCol.setVisible(false);
+                    processTable.refresh();
+
+
+                }
+                else {
+                    GanttDynamicDraw(currentProcess);
+                    processTable.refresh();
+                    currentColumnIndex[0]++;
+                    if (currentColumnIndex[0] >= queue.size()) {
+                        timeline.stop();
+                        waitTimeCol.setVisible(true);
+                        turnAroundCol.setVisible(true);
+                        completeTimeCol.setVisible(true);
+                        processTable.refresh();
+                        avgTurnTime.setText(String.format("%.2f", fcfs.getAvg_turnaround_time()));
+                        avgWaitTime.setText(String.format("%.2f", fcfs.getAvg_waiting_time()));
+                    }
+                }
+
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+
+
+        }
 
 
 
@@ -297,7 +374,6 @@ public class SchedulerController implements Initializable {
         startText.setY(rectHeight + 112 + ganttPane.getTranslateY()); // adjust the y position to place it below the rectangle
         startText.setX(ganttPane.getTranslateX() + 13); // adjust the x position to align it with the start of the rectangle
         group2.getChildren().add(startText);
-//        for(int i = 0; i < queue.size(); i++){
         Rectangle rectangle = new Rectangle();
         rectangle.setHeight(100);
         rectangle.setWidth(queue.getBurst_time() * 30);
@@ -313,7 +389,6 @@ public class SchedulerController implements Initializable {
         rectangle.setY(rectHeight + ganttPane.getTranslateY());
         rectangle.setX(ganttPane.getTranslateX() + 15 + (queue.start_time * 30));
         ganttScene.setRoot(group2);
-//        }
 
     }
 
