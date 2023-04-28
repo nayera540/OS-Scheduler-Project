@@ -18,6 +18,8 @@ public class PriorityScheduling {
     ArrayList<Process> processQueue = new ArrayList<>();
 
 
+
+
     public void Priority_Scheduling (ArrayList<Process> p, Boolean preemptive) {
         int n = p.size();
         for (int i = 0; i < n; i++) {
@@ -26,10 +28,10 @@ public class PriorityScheduling {
 
         while (completed != n) {
             int idx = -1;
-            int mx = -1;
+            int mx = Integer.MAX_VALUE;
             for (int i = 0; i < n; i++) {
                 if (p.get(i).getArrival_time() <= current_time && is_completed[i] == 0) {
-                    if (p.get(i).getPriority() > mx) {
+                    if (p.get(i).getPriority() < mx) {
                         mx = p.get(i).getPriority();
                         idx = i;
                     }
@@ -82,23 +84,7 @@ public class PriorityScheduling {
 
         setAvg_turnaround_time((float) total_turnaround_time / n);
         setAvg_waiting_time((float) total_waiting_time / n);
-        for (int i = 0; i < p.size() - 1; i++) {
-            if (p.get(i).getArrival_time() == p.get(i + 1).getArrival_time()) {
-                if (p.get(i).getPriority() < p.get(i + 1).getPriority()) {
-                    if (p.get(i).start_time > p.get(i + 1).start_time) {
-                        p.get(i).start_time = p.get(i + 1).start_time;
-                        p.get(i).completion_time = p.get(i).start_time + p.get(i).getBurst_time();
-                        p.get(i + 1).start_time = p.get(i).completion_time;
-                        p.get(i + 1).completion_time = p.get(i + 1).start_time + p.get(i + 1).getBurst_time();
-                        p.get(i).turnaround_time = p.get(i).start_time + p.get(i).getBurst_time();
-                        p.get(i).waiting_time = p.get(i).start_time;
-                        p.get(i + 1).turnaround_time = p.get(i + 1).start_time + p.get(i + 1).getBurst_time();
-                        p.get(i + 1).waiting_time = p.get(i + 1).start_time;
 
-                    }
-                }
-            }
-        }
 
     }
 
@@ -148,6 +134,7 @@ public class PriorityScheduling {
             idle.setBurst_time(processQueue.get(0).start_time);
             idle.setPriority(-1);
             idle.completion_time = processQueue.get(0).start_time;
+            idle.setRemain_time(idle.getBurst_time());
             idle.setColor("grey");
             processQueue.add(0,idle);
         }
@@ -160,10 +147,51 @@ public class PriorityScheduling {
                 idle.setBurst_time(processQueue.get(i + 1).start_time - processQueue.get(i).completion_time);
                 idle.setPriority(-1);
                 idle.completion_time = processQueue.get(i+1).start_time;
+                idle.setRemain_time(idle.getBurst_time());
                 idle.setColor("grey");
                 processQueue.add(i+1,idle);
             }
+            if(processQueue.get(i).completion_time > processQueue.get(i+1).start_time){
+                Process p1 = new Process(); //Before Process
+                Process p2 = new Process(); //Remaining of the process
+                p1.setPid(processQueue.get(i).getPid());
+                p2.setPid(processQueue.get(i).getPid());
+                p1.setPriority(processQueue.get(i).getPriority());
+                p2.setPriority(processQueue.get(i).getPriority());
+                p1.start_time = processQueue.get(i).start_time;
+                p1.setBurst_time(processQueue.get(i + 1).start_time - processQueue.get(i).start_time);
+                p1.completion_time = processQueue.get(i+1).start_time;
+                p2.setBurst_time(processQueue.get(i).getBurst_time() - p1.getBurst_time());
+                p2.completion_time = processQueue.get(i).completion_time;
+                p2.start_time = processQueue.get(i).completion_time - p2.getBurst_time();
+                p1.setColor(processQueue.get(i).getColor());
+                p2.setColor(processQueue.get(i).getColor());
+                p1.setRemain_time(p1.getBurst_time());
+                p2.setRemain_time(p2.getBurst_time());
+				processQueue.remove(i);
+
+                processQueue.add(i,p1);
+                if(i+2 >= processQueue.size()){
+                    processQueue.add(p2);
+                }
+                else {
+                    int index = -1;
+                    for (int j = i + 1; j < processQueue.size(); j++) {
+                        if (processQueue.get(j).start_time == p2.completion_time) {
+                            index = j;
+                            break;
+                        }
+                    }
+                    if(index + 1 >=  processQueue.size())
+                        processQueue.add(p2);
+                    else
+                        processQueue.add(index+1,p2);
+                }
+            }
         }
+
+
+
         return processQueue;
     }
 
