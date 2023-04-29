@@ -133,16 +133,16 @@
       </ScrollPane>
       <TableView fx:id="processTable" layoutX="13.0" layoutY="136.0" prefHeight="226.0" prefWidth="876.0">
          <columns>
-            <TableColumn fx:id="pidCol" onEditCommit="#onEditPIDCol" prefWidth="59.199978828430176" style="-fx-alignment: CENTER;" text="PID" />
-            <TableColumn fx:id="arrivalTimeCol" onEditCommit="#onEditArrivalTimeCol" prefWidth="85.60000610351562" style="-fx-alignment: CENTER;" text="Arrival Time" />
-            <TableColumn fx:id="priorityCol" onEditCommit="#onEditPriorityCol" prefWidth="70.4000244140625" style="-fx-alignment: CENTER;" text="Priority" />
+            <TableColumn fx:id="pidCol" prefWidth="59.199978828430176" style="-fx-alignment: CENTER;" text="PID" />
+            <TableColumn fx:id="arrivalTimeCol" prefWidth="85.60000610351562" style="-fx-alignment: CENTER;" text="Arrival Time" />
+            <TableColumn fx:id="priorityCol" prefWidth="70.4000244140625" style="-fx-alignment: CENTER;" text="Priority" />
             <TableColumn fx:id="colorCol" prefWidth="67.20002746582031" style="-fx-alignment: CENTER;" text="Color" />
-            <TableColumn fx:id="burstTimeCol" onEditCommit="#oneEditBurstTimeCol" prefWidth="84.79998779296875" style="-fx-alignment: CENTER;" text="Burst Time" />
-            <TableColumn fx:id="RemainingTimeCol" onEditCommit="#onRemainingTimeCol" prefWidth="102.4000244140625" style="-fx-alignment: CENTER;" text="Remaining Time" />
-            <TableColumn fx:id="startTimeCol" onEditCommit="#onEditStartTimeCol" prefWidth="88.0" style="-fx-alignment: CENTER;" text="Start Time" />
-            <TableColumn fx:id="completeTimeCol" onEditCommit="#onEditCompleteTimeCol" prefWidth="112.79998779296875" style="-fx-alignment: CENTER;" text="Completion Time" />
-            <TableColumn fx:id="turnAroundCol" onEditCommit="#onEditTurnAroundCol" prefWidth="112.7999267578125" style="-fx-alignment: CENTER;" text="Turnaround Time" />
-            <TableColumn fx:id="waitTimeCol" onEditCommit="#onEditWaitTimeCol" prefWidth="96.0001220703125" style="-fx-alignment: CENTER;" text="Waiting Time" />
+            <TableColumn fx:id="burstTimeCol" prefWidth="84.79998779296875" style="-fx-alignment: CENTER;" text="Burst Time" />
+            <TableColumn fx:id="RemainingTimeCol" prefWidth="102.4000244140625" style="-fx-alignment: CENTER;" text="Remaining Time" />
+            <TableColumn fx:id="startTimeCol" prefWidth="88.0" style="-fx-alignment: CENTER;" text="Start Time" />
+            <TableColumn fx:id="completeTimeCol" prefWidth="112.79998779296875" style="-fx-alignment: CENTER;" text="Completion Time" />
+            <TableColumn fx:id="turnAroundCol" prefWidth="112.7999267578125" style="-fx-alignment: CENTER;" text="Turnaround Time" />
+            <TableColumn fx:id="waitTimeCol" prefWidth="96.0001220703125" style="-fx-alignment: CENTER;" text="Waiting Time" />
          </columns>
       </TableView>
    </children>

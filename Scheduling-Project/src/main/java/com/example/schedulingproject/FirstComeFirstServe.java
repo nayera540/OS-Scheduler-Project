@@ -19,6 +19,16 @@ public class FirstComeFirstServe {
     int n; //Number of processes
 
     ArrayList<Process> processQueue = new ArrayList<Process>();
+<<<<<<< Updated upstream
+=======
+
+    /*
+     *  @param   n                  number of processes
+     *  @param prev                 previous time
+     *  @param avg_waiting_time     average waiting time
+     *  @param avg_turnaround_time  average turn around time
+     */
+>>>>>>> Stashed changes
     public void FirstComeFirstServe(ArrayList<Process> p){
         n = p.size();
 
@@ -98,6 +108,11 @@ public class FirstComeFirstServe {
                 return p1.start_time - p2.start_time;
             }
         });
+<<<<<<< Updated upstream
+=======
+
+        // Checking for idle period at time 0
+>>>>>>> Stashed changes
         if(processQueue.get(0).start_time > 0){
             Process idle = new Process();
             idle.setPid(0);
@@ -110,6 +125,10 @@ public class FirstComeFirstServe {
         }
         for(int i = 0; i < processQueue.size()-1; i++){
 
+<<<<<<< Updated upstream
+=======
+            //Checking for idle periods between processes
+>>>>>>> Stashed changes
             if(processQueue.get(i+1).start_time > processQueue.get(i).completion_time){
                 Process idle = new Process();
                 idle.setPid(0);

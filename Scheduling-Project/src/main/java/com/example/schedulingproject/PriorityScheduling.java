@@ -18,7 +18,18 @@ public class PriorityScheduling {
     ArrayList<Process> processQueue = new ArrayList<>();
 
 
+<<<<<<< Updated upstream
 
+=======
+    /*
+     *  @param   n                  number of processes
+     *  @param completed            tells when all processes in the queue end
+     *  @param is_completed         tells if a process finishes excution '1' or not '0'
+     *  @param prev                 previous time
+     *  @param avg_waiting_time     average waiting time
+     *  @param avg_turnaround_time  average turn around time
+     */
+>>>>>>> Stashed changes
 
     public void Priority_Scheduling (ArrayList<Process> p, Boolean preemptive) {
         int n = p.size();
@@ -29,6 +40,11 @@ public class PriorityScheduling {
         while (completed != n) {
             int idx = -1;
             int mx = Integer.MAX_VALUE;
+<<<<<<< Updated upstream
+=======
+
+            // Sorting process according to arrival time and priorty
+>>>>>>> Stashed changes
             for (int i = 0; i < n; i++) {
                 if (p.get(i).getArrival_time() <= current_time && is_completed[i] == 0) {
                     if (p.get(i).getPriority() < mx) {
@@ -43,6 +59,12 @@ public class PriorityScheduling {
                     }
                 }
             }
+<<<<<<< Updated upstream
+=======
+            // Calculate the waiting time and completion time of each process
+
+            // Non-preemtive priority algorithm
+>>>>>>> Stashed changes
             if (idx != -1) {
                 if (!preemptive) {
                     p.get(idx).start_time = current_time;
@@ -58,6 +80,10 @@ public class PriorityScheduling {
                     current_time = p.get(idx).completion_time;
                     prev = current_time;
                 }
+<<<<<<< Updated upstream
+=======
+                // Preemtive priority algorithm
+>>>>>>> Stashed changes
                 if (preemptive) {
                     if (burst_remaining[idx] == p.get(idx).getBurst_time()) {
                         p.get(idx).start_time = current_time;
@@ -120,6 +146,10 @@ public class PriorityScheduling {
     }
 
 
+<<<<<<< Updated upstream
+=======
+    // Sorting processes qeueue by arrival time
+>>>>>>> Stashed changes
     public ArrayList<Process> setProcessQueue(ArrayList<Process> pp){
         processQueue.addAll(pp);
         Collections.sort(processQueue, new Comparator<Process>() {
@@ -127,6 +157,11 @@ public class PriorityScheduling {
                 return p1.start_time - p2.start_time;
             }
         });
+<<<<<<< Updated upstream
+=======
+
+        // Checking for idle period at time 0
+>>>>>>> Stashed changes
         if(processQueue.get(0).start_time > 0){
             Process idle = new Process();
             idle.setPid(0);
@@ -140,6 +175,10 @@ public class PriorityScheduling {
         }
         for(int i = 0; i < processQueue.size()-1; i++){
 
+<<<<<<< Updated upstream
+=======
+            //Checking for idle periods between processes
+>>>>>>> Stashed changes
             if(processQueue.get(i+1).start_time > processQueue.get(i).completion_time){
                 Process idle = new Process();
                 idle.setPid(0);
@@ -168,7 +207,7 @@ public class PriorityScheduling {
                 p2.setColor(processQueue.get(i).getColor());
                 p1.setRemain_time(p1.getBurst_time());
                 p2.setRemain_time(p2.getBurst_time());
-				processQueue.remove(i);
+                processQueue.remove(i);
 
                 processQueue.add(i,p1);
                 if(i+2 >= processQueue.size()){
