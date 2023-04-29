@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -10,8 +11,6 @@ public class SJFScheduler {
     private float averageWaitingTime;
     private float averageTurnaroundTime;
     private final int timeSlot;
-    Queue<Process> processQueue;
-
 
 
     public  SJFScheduler(){
@@ -45,10 +44,11 @@ public class SJFScheduler {
      * @param preemptive determines if the scheduling is preemptive or not ie. if the process is interrupted after
      *                   its time slot is finished or not
     */
-    public void schedule(ArrayList<Process> processes, boolean preemptive) {
+    public ArrayList<Process> schedule(ArrayList<Process> processes, boolean preemptive) {
         int currentTime = 0, completedProcesses = 0, numberOfProcesses = processes.size();
         int idleTime = 0;
-        processQueue = new PriorityQueue<>();
+        ArrayList<Process> processQueue = new ArrayList<>();
+
 
         //preemptive scheduling
         if (preemptive) {
@@ -119,6 +119,7 @@ public class SJFScheduler {
         }
         this.averageWaitingTime /= numberOfProcesses;
         this.averageTurnaroundTime /= numberOfProcesses;
+        return processQueue;
     }
 
     /**
@@ -139,7 +140,7 @@ public class SJFScheduler {
      * @returns Process the shortest process, if not found returns null
     */
     private Process getShortestProcessIndex(ArrayList<Process> processes, int currentTime){
-        int min = processes.get(1).getBurst_time(), counter = noProcess;
+        int min = Integer.MAX_VALUE, counter = noProcess;
         for (int i = 0; i < processes.size(); i++) {
             //get the shortest job
             if ((processes.get(i).getArrival_time() <= currentTime) && (processes.get(i).getRemain_time() != 0) && (processes.get(i).getRemain_time() < min)) {
