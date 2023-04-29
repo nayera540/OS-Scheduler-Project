@@ -48,7 +48,7 @@ public class SJFScheduler {
         int currentTime = 0, completedProcesses = 0, numberOfProcesses = processes.size();
         int idleTime = 0;
         ArrayList<Process> processQueue = new ArrayList<>();
-        
+
 
         //preemptive scheduling
         if (preemptive) {
@@ -66,6 +66,8 @@ public class SJFScheduler {
                         processQueue.add(idle);
                         idleTime = 0;
                     }
+                    if(currentProcess.getRemain_time()==currentProcess.getBurst_time())
+                        currentProcess.setStart_time(currentTime);
                     currentProcess.decrementRemain_time(timeSlot);
                     processQueue.add(currentProcess);
                     currentTime++;
@@ -78,7 +80,7 @@ public class SJFScheduler {
                 }
             }
 
-           
+
         }
         //non-preemptive scheduling
         else {
@@ -97,7 +99,7 @@ public class SJFScheduler {
                     }
                     int completionTime = currentTime + currentProcess.getBurst_time();
                     //calculate turnaround time and waiting time for every process
-
+                    currentProcess.setStart_time(currentTime);
                     currentTime += currentProcess.getBurst_time();
                     currentProcess.setRemain_time(0);
                     currentProcess.setCompletion_time(completionTime);
@@ -107,7 +109,7 @@ public class SJFScheduler {
             }
         }
 
-    
+
         for (Process process: processes) {
             //calculate turnaround time and waiting time for every process
             calculateOutputs(process);
