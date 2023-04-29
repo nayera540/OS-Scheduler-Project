@@ -1,3 +1,6 @@
+package com.example.schedulingproject;
+
+
 public class Process {
     private int pid;
     private int arrival_time;
@@ -10,10 +13,13 @@ public class Process {
     int response_time;
     private String color;
     int remain_time;
+    int currentTime;
+    int i;
 
     public Process(){
 
     }
+
 
     public Process(int pid, int arrival_time, int burst_time, int priority, String color) {
         this.pid = pid;
@@ -27,12 +33,32 @@ public class Process {
         this.waiting_time = -1;
         this.remain_time = this.burst_time;
 
+
+    }
+    public Process(int pid, int arrival_time, int burst_time, String color){
+        this.pid = pid;
+        this.arrival_time = arrival_time;
+        this.burst_time = burst_time;
+        this.color = color;
+        this.priority = 0;
+        this.start_time = -1;
+        this.completion_time = -1;
+        this.turnaround_time = -1;
+        this.waiting_time = -1;
+        this.remain_time = this.burst_time;
     }
 
 
     public Process(int id) {
         this.pid = id;
     }
+
+    public Process(int pid, int currentTime, int i) {
+        this.pid = pid;
+        this.start_time = currentTime;
+        this.burst_time = i;
+    }
+
 
     public int getPid() {
         return pid;
@@ -119,8 +145,17 @@ public class Process {
     public void setRemain_time(int remain_time) {
         this.remain_time = remain_time;
     }
-
     public void decrementRemain_time(int decrement){
         this.remain_time -= decrement;
     }
+
+
+    public int getRemaining_time() {
+        return this.remain_time;
+    }
+
+    public void setRemaining_time(int i) {
+        this.remain_time = i;
+    }
 }
+
