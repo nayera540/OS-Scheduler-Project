@@ -43,6 +43,7 @@ public class SJFScheduler {
      * @param processes a list of processes to be scheduled
      * @param preemptive determines if the scheduling is preemptive or not ie. if the process is interrupted after
      *                   its time slot is finished or not
+     * @return returns an arrayList of running processes in order
     */
     public ArrayList<Process> schedule(ArrayList<Process> processes, boolean preemptive) {
         int currentTime = 0, completedProcesses = 0, numberOfProcesses = processes.size();
@@ -63,8 +64,10 @@ public class SJFScheduler {
                 else {
                     if(idleTime != 0){
                         Process idle = new Process(0,currentTime,idleTime,-1,"grey");
-                        processQueue.add(idle);
-                        idleTime = 0;
+                        idle.setStart_time(currentTime-idleTime);
+                        idle.setCompletion_time(currentTime);
+                        processQueue.add(idle); /* add idle time to queue */
+                        idleTime = 0; /* reset idle time */
                     }
                     if(currentProcess.getRemain_time()==currentProcess.getBurst_time())
                         currentProcess.setStart_time(currentTime);
@@ -94,6 +97,8 @@ public class SJFScheduler {
                 else {
                     if(idleTime != 0){ /* if there's an idle time add it to queue */
                         Process idle = new Process(0,currentTime,idleTime,-1,"grey");
+                        idle.setStart_time(currentTime-idleTime);
+                        idle.setCompletion_time(currentTime);
                         processQueue.add(idle); /* add idle time to queue */
                         idleTime = 0; /* reset idle time */
                     }
@@ -153,5 +158,7 @@ public class SJFScheduler {
         else
             return processes.get(counter);
     }
+
+
 
 }
