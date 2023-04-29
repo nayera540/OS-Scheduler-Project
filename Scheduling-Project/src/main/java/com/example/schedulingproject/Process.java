@@ -1,9 +1,5 @@
 package com.example.schedulingproject;
-<<<<<<< Updated upstream
-import java.util.*;
-=======
 
->>>>>>> Stashed changes
 
 public class Process {
     private int pid;
@@ -16,13 +12,9 @@ public class Process {
     int waiting_time;
     int response_time;
     private String color;
-<<<<<<< Updated upstream
-     int remain_time;
-=======
     int remain_time;
     int currentTime;
     int i;
->>>>>>> Stashed changes
 
     public Process(){
 
@@ -153,9 +145,6 @@ public class Process {
     public void setRemain_time(int remain_time) {
         this.remain_time = remain_time;
     }
-<<<<<<< Updated upstream
-
-=======
     public void decrementRemain_time(int decrement){
         this.remain_time -= decrement;
     }
@@ -168,6 +157,5 @@ public class Process {
     public void setRemaining_time(int i) {
         this.remain_time = i;
     }
->>>>>>> Stashed changes
 }
 
