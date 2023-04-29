@@ -1,6 +1,3 @@
-package com.example.schedulingproject;
-import java.util.*;
-
 public class Process {
     private int pid;
     private int arrival_time;
@@ -12,7 +9,7 @@ public class Process {
     int waiting_time;
     int response_time;
     private String color;
-     int remain_time;
+    int remain_time;
 
     public Process(){
 
@@ -30,19 +27,6 @@ public class Process {
         this.waiting_time = -1;
         this.remain_time = this.burst_time;
 
-
-    }
-    public Process(int pid, int arrival_time, int burst_time, String color){
-        this.pid = pid;
-        this.arrival_time = arrival_time;
-        this.burst_time = burst_time;
-        this.color = color;
-        this.priority = 0;
-        this.start_time = -1;
-        this.completion_time = -1;
-        this.turnaround_time = -1;
-        this.waiting_time = -1;
-        this.remain_time = this.burst_time;
     }
 
 
@@ -136,5 +120,7 @@ public class Process {
         this.remain_time = remain_time;
     }
 
+    public void decrementRemain_time(int decrement){
+        this.remain_time -= decrement;
+    }
 }
-
