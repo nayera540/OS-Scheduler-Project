@@ -31,11 +31,12 @@ The app supports the following CPU scheduling algorithms:
 
 ## Shortest Job First (SJF) (Non-preemptive):
 
-![Screenshot (146)](https://user-images.githubusercontent.com/69148381/235346671-61458b5b-943e-427e-a422-3a37d83a3f73.png)
+![Screenshot (152)](https://user-images.githubusercontent.com/69148381/235349830-6c1d07f9-3838-41ae-a92d-2f8f3d7fc211.png)
 
 ## Shortest Job First (SJF) (preemptive):
 
-![Screenshot (147)](https://user-images.githubusercontent.com/69148381/235346720-3d8b4650-a621-4b7e-9ffa-1dda239b28ea.png)
+![Screenshot (153)](https://user-images.githubusercontent.com/69148381/235349833-1755737d-a3cc-43c6-b7c9-7cd59f4893f8.png)
+
 
 ## Priority Scheduling (Non-preemptive):
 
